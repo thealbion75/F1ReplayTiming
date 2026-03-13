@@ -2,9 +2,9 @@ services:
   backend:
     build: ./backend
     ports:
-      - "8000:8000"
+      - "8000:8000"  # Change the left side to use a different host port
     environment:
-      - FRONTEND_URL=http://localhost:3000
+      - FRONTEND_URL=http://localhost:3000  # Must match the URL you access the frontend on (for CORS)
       - DATA_DIR=/data
       # Optional - uncomment to enable features
       # - OPENROUTER_API_KEY=your-key-here  # enables photo/screenshot sync (manual entry sync works without this)
@@ -18,9 +18,11 @@ services:
     build:
       context: ./frontend
       args:
+        # This URL is baked into the frontend at build time — it's how the browser reaches the backend.
+        # If you change the backend port above, update this to match (e.g. http://localhost:9000).
         NEXT_PUBLIC_API_URL: http://localhost:8000
     ports:
-      - "3000:3000"
+      - "3000:3000"  # Change the left side to use a different host port
     depends_on:
       - backend
 
