@@ -4,7 +4,7 @@ services:
     ports:
       - "8000:8000"  # Change the left side to use a different host port
     environment:
-      - FRONTEND_URL=http://localhost:3000  # The URL your browser uses to access the frontend (for CORS)
+      - FRONTEND_URL=http://f1.thevermeers.co.uk:3000  # The URL your browser uses to access the frontend (for CORS)
       - DATA_DIR=/data
       # Optional - uncomment to enable features
       # - OPENROUTER_API_KEY=your-key-here  # enables photo/screenshot sync (manual entry sync works without this)
@@ -19,7 +19,7 @@ services:
     ports:
       - "3000:3000"  # Change the left side to use a different host port
     environment:
-     - NEXT_PUBLIC_API_URL=http://localhost:8000 # The URL your browser uses to reach the backend 
+     - NEXT_PUBLIC_API_URL=http://apif1.thevermeers.co.uk:8000 # The URL your browser uses to reach the backend 
     depends_on:
       - backend
 
