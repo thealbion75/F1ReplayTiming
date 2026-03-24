@@ -1,27 +1,21 @@
 services:
   backend:
-    build: ./backend
-    ports:
-      - "8000:8000"  # Change the left side to use a different host port
+    image: 'ghcr.io/adn8naiagent/f1replaytiming-backend:latest'
     environment:
-      - FRONTEND_URL=http://f1.thevermeers.co.uk:3000  # The URL your browser uses to access the frontend (for CORS)
+      - FRONTEND_URL=${FRONTEND_URL}
       - DATA_DIR=/data
-      # Optional - uncomment to enable features
-      # - OPENROUTER_API_KEY=your-key-here  # enables photo/screenshot sync (manual entry sync works without this)
-      # - AUTH_ENABLED=true
-      # - AUTH_PASSPHRASE=your-passphrase
     volumes:
       - f1data:/data
       - f1cache:/data/fastf1-cache
+    restart: unless-stopped
 
   frontend:
-    build: ./frontend
-    ports:
-      - "3000:3000"  # Change the left side to use a different host port
+    image: 'ghcr.io/adn8naiagent/f1replaytiming-frontend:latest'
     environment:
-     - NEXT_PUBLIC_API_URL=http://apif1.thevermeers.co.uk:8000 # The URL your browser uses to reach the backend 
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     depends_on:
       - backend
+    restart: unless-stopped
 
 volumes:
   f1data:
